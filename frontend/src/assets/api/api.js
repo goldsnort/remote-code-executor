@@ -1,4 +1,4 @@
-const baseURL = "http://localhost:3001";
+const baseURL = "http://localhost:4000";
 
 function handleCode(code, input) {
   fetch(`${baseURL}/code`, {
@@ -6,7 +6,7 @@ function handleCode(code, input) {
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
+    // credentials: "include",    //later uncomment it and add cors for server url later
     body: JSON.stringify({ code: code, input: input }),
   })
     .then((res) => {
