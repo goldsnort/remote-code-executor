@@ -25,6 +25,15 @@
   align-items: flex-start;
 }
 
+.code__run {
+  margin-right: 15px;
+  border: 0;
+  padding: 5px 10px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  border-radius: 5px;
+}
+
 .code__textarea,
 .input__textarea,
 .output__textarea {
@@ -36,13 +45,24 @@
   border: none;
   padding: 9px 1px 6px 6px;
   border-top: 1px solid white;
+  align-items: center;
+}
+
+.code__header,
+.input__header,
+.output__header {
+  display: flex;
+  width: 100%;
+  font-size: 1.3rem;
+  background: rgba(162, 217, 224, 0.406);
+  justify-content: space-between;
 }
 
 .code__heading,
 .input__heading,
 .output__heading {
-  margin: 10px 0 0 5px;
-  font-size: 1.3rem;
+  padding: 10px 0 0 5px;
+  color: white;
 }
 
 .executor__io {
