@@ -1,13 +1,15 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const fileUpload = require("express-fileupload");
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 let code = require("./routes/code");
 
 app.use(express.json());
 app.use(cors());
+app.use(fileUpload());
 
 app.use("/code", code);
 app.get("/", (req, res) => {

@@ -6,10 +6,11 @@ import handleCode from "../../assets/api/api";
 function CodeExecution() {
   const [code, setCode] = useState("//you can enter your code here");
   const [input, setInput] = useState("");
+  const [output, setOutput] = useState("press run to see your output");
 
   function runCode(e) {
     e.preventDefault();
-    handleCode(code, input);
+    handleCode(code, input, setOutput);
   }
 
   return (
@@ -52,7 +53,7 @@ function CodeExecution() {
             <textarea
               className="output__textarea"
               readOnly
-              value="press run to see your output"
+              value={output}
             ></textarea>
           </div>
         </section>

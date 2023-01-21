@@ -1,13 +1,13 @@
 const baseURL = "http://localhost:4000";
 
-function handleCode(code, input) {
+function handleCode(code, input, setOutput) {
   fetch(`${baseURL}/code`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     // credentials: "include",    //later uncomment it and add cors for server url later
-    body: JSON.stringify({ code: code, input: input }),
+    body: JSON.stringify({ code: code, input: input, lang: "cpp" }),
   })
     .then((res) => {
       if (res.ok === true) {
@@ -19,6 +19,11 @@ function handleCode(code, input) {
     })
     .then((d) => {
       console.log("the output is", d);
+      if (d.stderr) {
+        setOutput(d.stderr);
+      } else {
+        setOutput(d.stdout);
+      }
     })
     .catch((err) => {
       console.log(err);
