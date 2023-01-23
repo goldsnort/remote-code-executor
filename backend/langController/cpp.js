@@ -6,6 +6,7 @@ const exec = util.promisify(require("child_process").exec);
 // TODO: REMOVE THE DEL FROM THE DELETION COMMANDS AND REPLACE WITH RM
 
 const cpp = (fileName, input, res) => {
+  console.log("this cpp file runs");
   fs.writeFile(`${fileName}.txt`, input, (err) => {
     if (err) {
       console.log(err);

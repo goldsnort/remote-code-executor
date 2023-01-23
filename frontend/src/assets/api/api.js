@@ -6,7 +6,7 @@ function handleCode(code, input, setOutput) {
     headers: {
       "Content-Type": "application/json",
     },
-    // credentials: "include",    //later uncomment it and add cors for server url later
+    // credentials: "include",    // TODO: later uncomment it and add cors for server url later
     body: JSON.stringify({ code: code, input: input, lang: "cpp" }),
   })
     .then((res) => {
@@ -19,8 +19,8 @@ function handleCode(code, input, setOutput) {
     })
     .then((d) => {
       console.log("the output is", d);
-      if (d.stderr) {
-        setOutput(d.stderr);
+      if (d.stderr || d.err) {
+        setOutput(d.stderr || d.err);
       } else {
         setOutput(d.stdout);
       }
