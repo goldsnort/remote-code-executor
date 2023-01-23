@@ -4,29 +4,31 @@ import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import Navbar from "../../components/Navbar/Navbar";
 import "./CodeExecution.css";
 import handleCode from "../../assets/api/api";
+import Code from "../../components/code/code";
 
 function CodeExecution() {
   const [code, setCode] = useState("//you can enter your code here");
   const [input, setInput] = useState("");
-  const [selectedLanguage , setSelectedLanguage] = useState("C++");
+  const [selectedLanguage, setSelectedLanguage] = useState("C++");
+  const [mode, setMode] = useState("c_cpp");
 
   function runCode(e) {
     e.preventDefault();
     handleCode(code, input,selectedLanguage);
   }
-  // const codeString = '#include<stdio>';
   return (
     <div className="executor__page">
       <Navbar />
       <div className="executor__container">
+        
         <section className="executor__code">
           <div className="code__header">
             <div className="code__heading">Code.cpp</div>
 
 {/* <select className="code_language" name="languages" id="languages"> */}
 <select onChange={(e => {
-                  console.log('this is on change', e);
-                  setSelectedLanguage(e.target.value)})}>
+  console.log('this is on change', e);
+  setSelectedLanguage(e.target.value)})}>
   <option value="C++">C++</option>
   <option value="C">C</option>
   <option value="Java">Java</option>
@@ -36,18 +38,18 @@ function CodeExecution() {
               Run
             </button>
           </div>
-          <textarea
-            className="code__textarea"
+
+          <Code
+            mode={mode}
+            code={code}
             value={code}
             onChange={(e) => {
               setCode(e.target.value);
             }}
-          >
-            
-          </textarea>
-              <SyntaxHighlighter language="cpp" style={docco} showLineNumbers="true" >
-      {code}
-    </SyntaxHighlighter>
+            setCode= {setCode}
+                
+              />
+             
         </section>
         <section className="executor__io">
           <div className="executor__input">
