@@ -24,7 +24,7 @@ exports.code = (req, res) => {
             cpp(fileName, input, res);
           } else {
             res.json({ err: "This file contains malicious code" });
-            exec(`del ${fileName}.cpp`).then(() => {
+            exec(`rm ${fileName}.cpp`).then(() => {
               console.log("files deleted");
             });
           }
