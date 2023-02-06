@@ -7,7 +7,7 @@ function handleCode(code, input, setOutput) {
       "Content-Type": "application/json",
     },
     // credentials: "include",    // TODO: later uncomment it and add cors for server url later
-    body: JSON.stringify({ code: code, input: input, lang: "cpp" }),
+    body: JSON.stringify({ code: code, input: input, lang: "python" }),
   })
     .then((res) => {
       if (res.ok === true) {
