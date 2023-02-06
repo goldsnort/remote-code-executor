@@ -19,47 +19,37 @@ exports.code = (req, res) => {
     case "cpp":
       {
         let fileName = uuidv4();
-        fs.writeFile(`${fileName}.${lang}`, code, (err) => {
-          if (err) {
-            console.log(err);
-            res.json({ err: err });
-          } else {
-            // TODO: validate the incoming code here
-            if (validate(code, validateCpp)) {
-              // run the incoming code here
-              cpp(fileName, input, res);
+        if (validate(code, validateCpp)) {
+          fs.writeFile(`${fileName}.${lang}`, code, (err) => {
+            if (err) {
+              console.log(err);
+              res.json({ err: err });
             } else {
-              res.json({ err: "This file contains malicious code" });
-              exec(`rm ${fileName}.cpp`).then(() => {
-                console.log("files deleted");
-              });
+              cpp(fileName, input, res);
             }
-          }
-        });
+          });
+        } else {
+          res.json({ err: "This file contains malicious code" });
+        }
       }
       break;
+
     case "python":
       {
         let fileName = uuidv4();
-        fs.writeFile(`${fileName}.py`, code, (err) => {
-          if (err) {
-            console.log(err);
-            res.json({ err: err });
-          } else {
-            // TODO: validate the incoming code here
-            if (validate(code, validatePython)) {
-              // run the incoming code here
-              python(fileName, input, res);
+        if (validate(code, validatePython)) {
+          fs.writeFile(`${fileName}.py`, code, (err) => {
+            if (err) {
+              console.log(err);
+              res.json({ err: err });
             } else {
-              res.json({ err: "This file contains malicious code" });
-              exec(`rm ${fileName}.py`).then(() => {
-                console.log("files deleted");
-              });
+              python(fileName, input, res);
             }
-          }
-        });
+          });
+        } else {
+          res.json({ err: "This file contains malicious code" });
+        }
       }
-      break;
       break;
 
     default:
