@@ -1,3 +1,6 @@
-FROM ubuntu
+FROM alpine:3.9
 WORKDIR /usr/cpp
-RUN apt-get update && apt-get install build-essential -y
+RUN apk add build-base
+
+# sudo docker build -t cpp:v1 . 
+# run this command while in the cpp directory

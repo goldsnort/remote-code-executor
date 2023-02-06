@@ -11,7 +11,7 @@ const cpp = (fileName, input, res) => {
       console.log(err);
       res.json({ err: err });
     }
-    exec(`docker run -d -it cpp:v1 bash`).then((response) => {
+    exec(`docker run -d -it cpp:v1 sh`).then((response) => {
       const container_id = response.stdout.substring(0, 12);
       console.log(container_id);
       exec(
@@ -19,7 +19,7 @@ const cpp = (fileName, input, res) => {
       )
         .then(() => {
           exec(
-            `docker.exe exec -t ${container_id} bash -c "g++ ${fileName}.cpp -o ./a && ./a<${fileName}.txt"`
+            `docker exec -t ${container_id} sh -c "g++ ${fileName}.cpp -o ./a && ./a<${fileName}.txt"`
           )
             .then((resp) => {
               console.log(resp);

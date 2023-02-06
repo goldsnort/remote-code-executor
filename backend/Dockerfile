@@ -1,16 +1,16 @@
-FROM node:16.16.0-alpine3.11
+FROM ubuntu
 
 # Create app directory
-# WORKDIR /usr/nodeapp  
+WORKDIR /usr/nodeapp  
 
-# COPY ./package*.json ./
+COPY ./package*.json ./
 
-# COPY . .
+COPY . .
 
-# RUN apk update && apk upgrade
+RUN apt-get update && apt-get install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt-get install -y nodejs
+RUN npm install
+ 
 
-# RUN npm install
-
-# RUN apk add --update docker openrc
-
-# CMD [ "npm", "run", "start" ]
+CMD [ "npm", "run", "start" ]
