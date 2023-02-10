@@ -84,7 +84,7 @@ function CodeExecution() {
             <textarea
               className="output__textarea"
               readOnly
-              value="press run to see your output"
+              value={output}
             ></textarea>
           </div>
         </section>

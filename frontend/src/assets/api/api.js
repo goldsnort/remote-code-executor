@@ -19,6 +19,11 @@ function handleCode(code, input, selectedLanguage) {
     })
     .then((d) => {
       console.log("the output is", d);
+      if (d.stderr || d.err) {
+        setOutput(d.stdout || d.stderr || d.err);
+      } else {
+        setOutput(d.stdout);
+      }
     })
     .catch((err) => {
       console.log(err);
