@@ -10,6 +10,7 @@ const {
 } = require("../langController/validate");
 
 exports.code = (req, res) => {
+  console.log("there was a request made at /code route");
   const code = req.body.code;
   const lang = req.body.lang;
   const input = req.body.input;
@@ -17,6 +18,7 @@ exports.code = (req, res) => {
   switch (lang) {
     case "cpp":
       {
+        console.log("there was a cpp request");
         let fileName = uuidv4();
         if (validate(code, validateCpp)) {
           fs.writeFile(`${fileName}.${lang}`, code, (err) => {

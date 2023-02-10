@@ -1,13 +1,17 @@
 const baseURL = "http://localhost:4000";
 
-function handleCode(code, input, selectedLanguage) {
+function handleCode(code, input, selectedLanguage, setOutput) {
   fetch(`${baseURL}/code`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     // credentials: "include",    //later uncomment it and add cors for server url later
-    body: JSON.stringify({ code: code, input: input , selectedDesigner : selectedLanguage}),
+    body: JSON.stringify({
+      code: code,
+      input: input,
+      lang: selectedLanguage,
+    }),
   })
     .then((res) => {
       if (res.ok === true) {

@@ -7,44 +7,61 @@ import Code from "../../components/code/code";
 function CodeExecution() {
   const [code, setCode] = useState("//you can enter your code here");
   const [input, setInput] = useState("");
-  const [selectedLanguage, setSelectedLanguage] = useState("C++");
+  const [output, setOutput] = useState(
+    "Press the run button to see the output"
+  );
+  const [selectedLanguage, setSelectedLanguage] = useState("cpp");
   const [mode, setMode] = useState("c_cpp");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     switch (e.target.value) {
-      
-      case "C++": setMode("c_cpp");
+      case "C++":
+        setSelectedLanguage("cpp");
+        setMode("c_cpp");
         break;
-      case "C": setMode("c_cpp");
+      case "C":
+        setMode("c_cpp");
         break;
-      case "Java": setMode("java");
+      case "Java":
+        setSelectedLanguage("java");
+        setMode("java");
         break;
-      case "Python": setMode("python");
+      case "Python":
+        setSelectedLanguage("python");
+        setMode("python");
         break;
-      
+      default:
+        break;
     }
-}
+  };
 
   function runCode(e) {
     e.preventDefault();
-    handleCode(code, input,selectedLanguage);
+    handleCode(code, input, selectedLanguage, setOutput);
   }
   return (
     <div className="executor__page">
       <Navbar />
       <div className="executor__container">
-        
         <section className="executor__code">
           <div className="code__header">
             <div className="code__heading">Code.cpp</div>
 
-{/* <select className="code_language" name="languages" id="languages"> */}
-            <select onChange={handleSubmit} >
-              <option value="C++" name="c_cpp">C++</option>
-              <option value="C" name="c_cpp">C</option>
-              <option value="Java" name="java">Java</option>
-              <option value="Python" name="python">Python</option>
+            {/* <select className="code_language" name="languages" id="languages"> */}
+            <select onChange={handleSubmit}>
+              <option value="C++" name="c_cpp">
+                C++
+              </option>
+              <option value="C" name="c_cpp">
+                C
+              </option>
+              <option value="Java" name="java">
+                Java
+              </option>
+              <option value="Python" name="python">
+                Python
+              </option>
             </select>
             <button className="code__run" onClick={runCode}>
               Run
@@ -58,10 +75,8 @@ function CodeExecution() {
             onChange={(e) => {
               setCode(e.target.value);
             }}
-            setCode= {setCode}
-                
-              />
-             
+            setCode={setCode}
+          />
         </section>
         <section className="executor__io">
           <div className="executor__input">
