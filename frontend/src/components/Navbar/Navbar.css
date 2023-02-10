@@ -1,0 +1,122 @@
+nav {
+  background: #1a191c;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-grow: 0;
+}
+
+.menu-switch {
+  display: none;
+}
+
+.menu-switch i {
+  color: white;
+}
+
+.navbar-container {
+  max-width: 960px;
+  height: 65px;
+  padding: 12px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 85%;
+  flex-grow: 0;
+}
+
+.navbar-left {
+  width: 100%;
+  justify-self: flex-start;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-left a:link,
+.navbar-left a:visited,
+.navbar-left a:hover,
+.navbar-left a:active {
+  text-decoration: none;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  color: whitesmoke;
+}
+
+.navbar-left-items * {
+  margin: 10px 30px;
+}
+
+.navbar-logo {
+  width: 70px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  font-size: 25px !important;
+}
+
+.navbar-logo-img {
+  max-height: 40px;
+  border-radius: 9px;
+  transform: translateY(2px);
+}
+
+.navbar-right {
+  display: flex;
+  height: 50px;
+  align-items: center;
+}
+
+.auth-button {
+  font-family: "Montserrat";
+  border: none;
+  color: white;
+  padding: 11px 10px;
+  background: linear-gradient(
+    90deg,
+    rgba(97, 30, 255, 1) 0%,
+    rgba(117, 87, 188, 1) 200%
+  );
+  font-weight: 400;
+  font-size: 15px;
+  text-align: center;
+  border-radius: 11px;
+  cursor: pointer;
+}
+
+.navbar-btn {
+  padding: 0;
+  width: 70px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* @media (max-width: 786px) {
+    .navbar-left-items {
+      display: none;
+    }
+    .menu-switch {
+      display: flex;
+      min-width: 70px;
+      transform: translateY(10px);
+    }
+  
+    .navbar-container {
+      height: auto;
+      align-items: flex-start;
+    }
+    .navbar-left {
+      display: flex;
+      flex-direction: column;
+    }
+    .navbar-left-items.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  } */
