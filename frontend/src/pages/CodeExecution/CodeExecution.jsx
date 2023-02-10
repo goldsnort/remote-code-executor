@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import Navbar from "../../components/Navbar/Navbar";
 import "./CodeExecution.css";
 import handleCode from "../../assets/api/api";
@@ -11,6 +9,22 @@ function CodeExecution() {
   const [input, setInput] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("C++");
   const [mode, setMode] = useState("c_cpp");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    switch (e.target.value) {
+      
+      case "C++": setMode("c_cpp");
+        break;
+      case "C": setMode("c_cpp");
+        break;
+      case "Java": setMode("java");
+        break;
+      case "Python": setMode("python");
+        break;
+      
+    }
+}
 
   function runCode(e) {
     e.preventDefault();
@@ -26,14 +40,12 @@ function CodeExecution() {
             <div className="code__heading">Code.cpp</div>
 
 {/* <select className="code_language" name="languages" id="languages"> */}
-<select onChange={(e => {
-  console.log('this is on change', e);
-  setSelectedLanguage(e.target.value)})}>
-  <option value="C++">C++</option>
-  <option value="C">C</option>
-  <option value="Java">Java</option>
-  <option value="Python">Python</option>
-</select>
+            <select onChange={handleSubmit} >
+              <option value="C++" name="c_cpp">C++</option>
+              <option value="C" name="c_cpp">C</option>
+              <option value="Java" name="java">Java</option>
+              <option value="Python" name="python">Python</option>
+            </select>
             <button className="code__run" onClick={runCode}>
               Run
             </button>

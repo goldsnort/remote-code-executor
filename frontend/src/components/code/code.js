@@ -3,13 +3,18 @@ import AceEditor from "react-ace";
 
 import "./code.css";
 import "ace-builds/src-noconflict/mode-java";
+import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-noconflict/ext-language_tools";
+import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-cobalt";
 import "ace-builds/src-noconflict/ext-language_tools";
 
 const Code = (props) => {
-    var handleChange = (newVal) => {
+  var handleChange = (newVal) => {
+      console.log(props.mode)
       props.setCode(newVal);
         
     };
@@ -22,7 +27,8 @@ const Code = (props) => {
           width="100%"
           height="100%"
           value={props.code}
-          theme="kuroir"
+          // theme="github"
+          theme="monokai"
           showPrintMargin={false}
           onChange={handleChange}
           editorProps={{ $blockScrolling: true }}
