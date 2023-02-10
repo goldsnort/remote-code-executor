@@ -2,8 +2,6 @@ const util = require("util");
 const fs = require("fs");
 const exec = util.promisify(require("child_process").exec);
 
-// TODO: REMOVE THE EXE AFTER DOCKER COMMAND DURING DOCKER IN DOCKER APPROACH
-
 const cpp = (fileName, input, res) => {
   console.log("this cpp file runs");
   fs.writeFile(`${fileName}.txt`, input, (err) => {

@@ -5,10 +5,9 @@ const python = require("../langController/python");
 const {
   validateCpp,
   validatePython,
+  validateJava,
   validate,
 } = require("../langController/validate");
-const util = require("util");
-const exec = util.promisify(require("child_process").exec);
 
 exports.code = (req, res) => {
   const code = req.body.code;
@@ -44,6 +43,24 @@ exports.code = (req, res) => {
               res.json({ err: err });
             } else {
               python(fileName, input, res);
+            }
+          });
+        } else {
+          res.json({ err: "This file contains malicious code" });
+        }
+      }
+      break;
+
+    case "java":
+      {
+        let fileName = uuidv4();
+        if (validate(code, validateJava)) {
+          fs.writeFile(`${fileName}.java`, code, (err) => {
+            if (err) {
+              console.log(err);
+              res.json({ err: err.stdout });
+            } else {
+              java(fileName, input, res);
             }
           });
         } else {
