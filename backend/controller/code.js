@@ -2,6 +2,7 @@ const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const cpp = require("../langController/cpp");
 const python = require("../langController/python");
+const java = require("../langController/java");
 const {
   validateCpp,
   validatePython,
