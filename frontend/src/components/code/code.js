@@ -14,9 +14,9 @@ import "ace-builds/src-noconflict/ext-language_tools";
 
 const Code = (props) => {
   var handleChange = (newVal) => {
-      console.log(props.mode)
-      props.setCode(newVal);
-        
+    props.setCode(newVal);
+    console.log("newVal: " + newVal);
+      props.socket.emit("sendCode", newVal, () => console.log("Message sent"));  
     };
     
   

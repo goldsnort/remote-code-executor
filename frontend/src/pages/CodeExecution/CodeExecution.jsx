@@ -1,10 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import "./CodeExecution.css";
 import handleCode from "../../assets/api/api";
+import io from "socket.io-client";
 import Code from "../../components/code/code";
 
+
+
+const ENDPOINT = "http://localhost:4000"
+
+const socket = io(ENDPOINT);
+
+// io.on("connection", (socket) => {
+//   socket.join("some room");
+// });
+
+socket.on("connection", (socket) => {
+  console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+});
+
+
 function CodeExecution() {
+  
   const [code, setCode] = useState("//you can enter your code here");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState(
@@ -12,6 +29,21 @@ function CodeExecution() {
   );
   const [selectedLanguage, setSelectedLanguage] = useState("cpp");
   const [mode, setMode] = useState("c_cpp");
+  const [room, setRoom] = useState("");
+  const [name, setName] = useState("");
+  
+  useEffect(() => {
+   
+    // socket.emit("join", ( "room 1" ))
+   
+  }, []);
+  
+  useEffect(() => {
+    socket.on("sendCode", (message) => {
+      console.log(message)
+      setCode(message);
+    });
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,6 +67,9 @@ function CodeExecution() {
         break;
     }
   };
+
+
+
 
   function runCode(e) {
     e.preventDefault();
@@ -74,7 +109,10 @@ function CodeExecution() {
             value={code}
             onChange={(e) => {
               setCode(e.target.value);
+
+
             }}
+            socket={socket}
             setCode={setCode}
           />
         </section>

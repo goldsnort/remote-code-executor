@@ -25,11 +25,14 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
+
+  socket.join("some room");
+
   console.log("what is a socket", socket);
   console.log("socket is active to be connected");
-  socket.on("codeChange", (payload) => {
+  socket.on("sendCode", (payload) => {
     console.log("what is payload", payload);
-    io.emit("codeChange", payload);
+    io.emit("sendCode", payload);
   });
 });
 
