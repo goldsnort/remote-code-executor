@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import "./CodeExecution.css";
 import handleCode from "../../assets/api/api";
 import io from "socket.io-client";
+import { nanoid } from 'nanoid'
 import Code from "../../components/code/code";
 
 
@@ -29,8 +30,8 @@ function CodeExecution() {
   );
   const [selectedLanguage, setSelectedLanguage] = useState("cpp");
   const [mode, setMode] = useState("c_cpp");
-  const [room, setRoom] = useState("");
-  const [name, setName] = useState("");
+  const [roomID, setRoomID] = useState("");
+  const [userName, setUserName] = useState("");
   
   useEffect(() => {
    
@@ -68,7 +69,13 @@ function CodeExecution() {
     }
   };
 
-
+  const createRoom = () => {
+    setUserName(nanoid(15));
+    setRoomID(nanoid(10));
+    socket.emit("joinRoom",{userName: userName, roomID: roomID},() => {
+      console.log(userName,roomID);
+    });
+  }
 
 
   function runCode(e) {
@@ -98,7 +105,15 @@ function CodeExecution() {
                 Python
               </option>
             </select>
-            <button className="code__run" onClick={runCode}>
+            <button className="create__room"
+              onClick={createRoom}
+            >
+              Create Room
+            </button>
+            <button className="join__room" >
+              Join Room
+            </button>
+            <button className="code__run" onClick={createRoom}>
               Run
             </button>
           </div>
