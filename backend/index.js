@@ -33,7 +33,7 @@ io.on("connection", (socket) => {
     io.emit("sendCode", payload);
   });
   socket.on("joinRoom", (payload) => {
-    socket.join(payload.roomID);
+    socket.join(payload.room);
     console.log("joinRoom payload", payload);
     io.emit("joinRoom", payload);
   });
