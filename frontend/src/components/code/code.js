@@ -1,4 +1,4 @@
-import React from "react";  
+import React from "react";
 import AceEditor from "react-ace";
 
 import "./code.css";
@@ -16,31 +16,31 @@ const Code = (props) => {
   var handleChange = (newVal) => {
     props.setCode(newVal);
     console.log("newVal: " + newVal);
-      props.socket.emit("sendCode", newVal, () => console.log("Message sent"));  
-    };
-    
-  
-  const content = (
-      <div id="editor">
-        <AceEditor
-          mode={props.mode}
-          width="100%"
-          height="100%"
-          value={props.code}
-          // theme="github"
-          theme="monokai"
-          showPrintMargin={false}
-          onChange={handleChange}
-          editorProps={{ $blockScrolling: true }}
-          setOptions={{
-            enableBasicAutocompletion: true,
-            enableLiveAutocompletion: true,
-            enableSnippets: true,
-          }}
-        />
-      </div>
-    );
-    return content;
+    if (props.socket)
+      props.socket.emit("sendCode", newVal, () => console.log("Message sent"));
   };
-  
-  export default Code;
+
+  const content = (
+    <div id="editor">
+      <AceEditor
+        mode={props.mode}
+        width="100%"
+        height="100%"
+        value={props.code}
+        // theme="github"
+        theme="monokai"
+        showPrintMargin={false}
+        onChange={handleChange}
+        editorProps={{ $blockScrolling: true }}
+        setOptions={{
+          enableBasicAutocompletion: true,
+          enableLiveAutocompletion: true,
+          enableSnippets: true,
+        }}
+      />
+    </div>
+  );
+  return content;
+};
+
+export default Code;

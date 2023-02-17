@@ -8,15 +8,15 @@ import Code from "../../components/code/code";
 
 const ENDPOINT = "http://localhost:4000";
 
-const socket = io(ENDPOINT);
+// let socket = null;
 
 // io.on("connection", (socket) => {
 //   socket.join("some room");
 // });
 
-socket.on("connection", (socket) => {
-  console.log(socket.id); // x8WIv7-mJelg7on_ALbx
-});
+// socket.on("connection", (socket) => {
+//   console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+// });
 
 function CodeExecution() {
   const [code, setCode] = useState("//you can enter your code here");
@@ -28,21 +28,36 @@ function CodeExecution() {
   const [mode, setMode] = useState("c_cpp");
   const [room, setRoom] = useState("");
   const [userName, setUserName] = useState("");
+  const [socket, setSocket] = useState(null);
+
+  // useEffect(() => {
+  // //   // socket.emit("join", ( "room 1" ))
+  // // }, []);
+
+  // useEffect(() => {}, []);
 
   useEffect(() => {
-    // socket.emit("join", ( "room 1" ))
-    socket.on("joinRoom", (message) => {
-      console.log("Join room listen ", message);
-      console.log("room id ", room);
-    });
-  }, []);
+    if (room && userName) {
+      // joinRoom();
+      setSocket(io(ENDPOINT));
+    }
+  }, [room, userName]);
 
   useEffect(() => {
-    socket.on("sendCode", (message) => {
-      console.log(message);
-      setCode(message);
-    });
-  }, []);
+    if (socket) {
+      socket.emit("joinRoom", { userName: userName, room: room }, () => {
+        console.log(userName, room);
+      });
+      socket.on("joinRoom", (message) => {
+        console.log("Join room listen ", message);
+        console.log("room id ", room);
+      });
+      socket.on("sendCode", (message) => {
+        console.log(message);
+        setCode(message);
+      });
+    }
+  }, [socket]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -67,17 +82,10 @@ function CodeExecution() {
     }
   };
 
-  const joinRoom = () => {
+  // const joinRoom = () => {
+  //   console.log("The username from callback is", userName);
 
-    console.log("The username from callback is",userName);
-    socket.emit("joinRoom", { userName: userName, room: room }, () => {
-      console.log(userName, room);
-    });
-  }
-  
-  useEffect(() => {
-    joinRoom();
-  } , [room,userName])
+  // };
 
   // const useJoinRoom = (room) => {
   //   setUserName(nanoid(15));
@@ -137,8 +145,7 @@ function CodeExecution() {
               className="join__room"
               onClick={() => {
                 setUserName(nanoid(15));
-                setRoom("1234")            
-               
+                setRoom("1234");
               }}
             >
               Join Room
@@ -151,10 +158,10 @@ function CodeExecution() {
           <Code
             mode={mode}
             code={code}
-            value={code}
-            onChange={(e) => {
-              setCode(e.target.value);
-            }}
+            //value={code}
+            // onChange={(e) => {
+            //   setCode(e.target.value);
+            // }}
             socket={socket}
             setCode={setCode}
           />
