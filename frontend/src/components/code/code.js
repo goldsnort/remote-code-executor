@@ -28,6 +28,7 @@ const Code = (props) => {
         height="100%"
         value={props.code}
         // theme="github"
+        fontSize="17px"
         theme="monokai"
         showPrintMargin={false}
         onChange={handleChange}

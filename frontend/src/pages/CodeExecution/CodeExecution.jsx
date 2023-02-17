@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import "./CodeExecution.css";
 import handleCode from "../../assets/api/api";
@@ -18,9 +18,10 @@ function CodeExecution() {
   );
   const [selectedLanguage, setSelectedLanguage] = useState("cpp");
   const [mode, setMode] = useState("c_cpp");
-  const [room, setRoom] = useState("");
+  const [room, setRoom] = useState("1234567891");
   const [userName, setUserName] = useState("");
   const [socket, setSocket] = useState(null);
+  const [isSocketConnected, setIsSocketConnected] = useState(false);
 
   useEffect(() => {
     if (room && userName) {
@@ -31,6 +32,7 @@ function CodeExecution() {
   useEffect(() => {
     if (socket) {
       socket.emit("joinRoom", { userName: userName, room: room }, () => {
+        setIsSocketConnected(true);
         console.log(userName, room);
       });
       socket.on("joinRoom", (message) => {
@@ -92,10 +94,11 @@ function CodeExecution() {
       <div className="executor__container">
         <section className="executor__code">
           <div className="code__header">
-            <div className="code__heading">Code.cpp</div>
+            <button className="code__run" onClick={runCode}>
+              Run
+            </button>
 
-            {/* <select className="code_language" name="languages" id="languages"> */}
-            <select onChange={handleSubmit}>
+            <select className="code_language" onChange={handleSubmit}>
               <option value="C++" name="c_cpp">
                 C++
               </option>
@@ -109,21 +112,50 @@ function CodeExecution() {
                 Python
               </option>
             </select>
-            <button className="create__room" onClick={createRoom}>
-              Create Room
-            </button>
-            <button
-              className="join__room"
-              onClick={() => {
-                setUserName(nanoid(15));
-                setRoom("1234");
-              }}
-            >
-              Join Room
-            </button>
-            <button className="code__run" onClick={runCode}>
-              Run
-            </button>
+            {isSocketConnected ? (
+              <div className="executor__room">
+                <div className="room__container">
+                  <div className="room__label">Room Id :</div>
+                  <input
+                    type="text"
+                    className="room__id"
+                    value={room}
+                    onClick={(e) => {
+                      e.target.select();
+                    }}
+                  />
+                  <button
+                    className="copy__link"
+                    onClick={() => {
+                      navigator.clipboard.writeText(room);
+                    }}
+                  >
+                    <span class="material-icons">content_copy</span>
+                  </button>
+                </div>
+                <button
+                  className="leave__room"
+                  // onClick={createRoom}
+                >
+                  Leave Room
+                </button>
+              </div>
+            ) : (
+              <div className="executor__room">
+                <button className="create__room" onClick={createRoom}>
+                  Create Room
+                </button>
+                <button
+                  className="join__room"
+                  onClick={() => {
+                    setUserName(nanoid(15));
+                    setRoom("1234");
+                  }}
+                >
+                  Join Room
+                </button>
+              </div>
+            )}
           </div>
 
           <Code mode={mode} code={code} socket={socket} setCode={setCode} />
