@@ -142,14 +142,20 @@ function CodeExecution() {
               </div>
             ) : (
               <div className="executor__room">
-                <button className="create__room" onClick={createRoom}>
+                <button
+                  className="create__room"
+                  onClick={() => {
+                    setUserName(nanoid(15));
+                    setRoom(nanoid(10));
+                  }}
+                >
                   Create Room
                 </button>
                 <button
                   className="join__room"
                   onClick={() => {
                     setUserName(nanoid(15));
-                    setRoom("1234");
+                    setRoom(nanoid(10));
                   }}
                 >
                   Join Room
