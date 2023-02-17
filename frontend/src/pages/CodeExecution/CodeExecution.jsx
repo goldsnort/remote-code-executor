@@ -25,6 +25,7 @@ function CodeExecution() {
 
   useEffect(() => {
     if (room && userName) {
+      setIsSocketConnected(true);
       setSocket(io(ENDPOINT));
     }
   }, [room, userName]);
@@ -32,7 +33,6 @@ function CodeExecution() {
   useEffect(() => {
     if (socket) {
       socket.emit("joinRoom", { userName: userName, room: room }, () => {
-        setIsSocketConnected(true);
         console.log(userName, room);
       });
       socket.on("joinRoom", (message) => {
@@ -130,7 +130,7 @@ function CodeExecution() {
                       navigator.clipboard.writeText(room);
                     }}
                   >
-                    <span class="material-icons">content_copy</span>
+                    <span className="material-icons">content_copy</span>
                   </button>
                 </div>
                 <button
