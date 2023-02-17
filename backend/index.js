@@ -28,14 +28,30 @@ io.on("connection", (socket) => {
 
   console.log("what is a socket", socket);
   console.log("socket is active to be connected");
-  socket.on("sendCode", (payload) => {
-    console.log("what is payload", payload);
-    io.emit("sendCode", payload);
-  });
+
   socket.on("joinRoom", (payload) => {
     socket.join(payload.room);
     console.log("joinRoom payload", payload);
     io.emit("joinRoom", payload);
+  });
+
+  socket.on("sendCode", (payload) => {
+    console.log("what is payload", payload);
+    io.emit("sendCode", payload);
+  });
+
+  socket.on("sendInput", (payload) => {
+    console.log("send Input event triggered", payload);
+    io.emit("sendInput", payload);
+  });
+
+  socket.on("sendOutput", (payload) => {
+    console.log("send Output event triggered", payload);
+    io.emit("sendOutput", payload);
+  });
+
+  socket.on("disconnect", (payload) => {
+    console.log("disconnect event triggered", payload);
   });
 });
 

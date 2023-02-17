@@ -5,6 +5,8 @@ import handleCode from "../../assets/api/api";
 import io from "socket.io-client";
 import { nanoid } from "nanoid";
 import Code from "../../components/code/code";
+import Output from "../../components/Output/Output";
+import Input from "../../components/Input/Input";
 
 const ENDPOINT = "http://localhost:4000";
 
@@ -38,6 +40,14 @@ function CodeExecution() {
       socket.on("sendCode", (message) => {
         console.log(message);
         setCode(message);
+      });
+      socket.on("sendInput", (message) => {
+        console.log(message);
+        setInput(message);
+      });
+      socket.on("sendOutput", (message) => {
+        console.log(message);
+        setOutput(message);
       });
     }
   }, [socket]);
@@ -119,29 +129,8 @@ function CodeExecution() {
           <Code mode={mode} code={code} socket={socket} setCode={setCode} />
         </section>
         <section className="executor__io">
-          <div className="executor__input">
-            <div className="input__header">
-              <div className="input__heading">Input.txt</div>
-            </div>
-            <textarea
-              className="input__textarea"
-              placeholder="enter your input here"
-              value={input}
-              onChange={(e) => {
-                setInput(e.target.value);
-              }}
-            ></textarea>
-          </div>
-          <div className="executor__output">
-            <div className="output__header">
-              <div className="output__heading">Output.txt</div>
-            </div>
-            <textarea
-              className="output__textarea"
-              readOnly
-              value={output}
-            ></textarea>
-          </div>
+          <Input input={input} setInput={setInput} socket={socket} />
+          <Output output={output} />
         </section>
       </div>
     </div>
