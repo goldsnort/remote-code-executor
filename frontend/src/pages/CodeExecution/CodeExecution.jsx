@@ -84,7 +84,7 @@ function CodeExecution() {
 
   function runCode(e) {
     e.preventDefault();
-    handleCode(code, input, selectedLanguage, setOutput);
+    handleCode(code, input, selectedLanguage, setOutput, socket);
   }
   return (
     <div className="executor__page">

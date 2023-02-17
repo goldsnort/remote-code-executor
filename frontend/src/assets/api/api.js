@@ -1,6 +1,18 @@
 const baseURL = "http://localhost:4000";
 
-function handleCode(code, input, selectedLanguage, setOutput) {
+const outputChange = (d, setOutput, socket) => {
+  console.log("output change triggered");
+  if (d.stdout || d.stderr || d.err) {
+    setOutput(d.stdout || d.stderr || d.err);
+    if (socket) {
+      socket.emit("sendOutput", d.stdout || d.stderr || d.err, () => {
+        console.log("ouput change socket event triggered");
+      });
+    }
+  }
+};
+
+function handleCode(code, input, selectedLanguage, setOutput, socket) {
   fetch(`${baseURL}/code`, {
     method: "POST",
     headers: {
@@ -23,10 +35,8 @@ function handleCode(code, input, selectedLanguage, setOutput) {
     })
     .then((d) => {
       console.log("the output is", d);
-      if (d.stderr || d.err) {
-        setOutput(d.stdout || d.stderr || d.err);
-      } else {
-        setOutput(d.stdout);
+      if (d.stdout || d.stderr || d.err) {
+        outputChange(d, setOutput, socket);
       }
     })
     .catch((err) => {
