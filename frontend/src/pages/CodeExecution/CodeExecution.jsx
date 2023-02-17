@@ -8,16 +8,6 @@ import Code from "../../components/code/code";
 
 const ENDPOINT = "http://localhost:4000";
 
-// let socket = null;
-
-// io.on("connection", (socket) => {
-//   socket.join("some room");
-// });
-
-// socket.on("connection", (socket) => {
-//   console.log(socket.id); // x8WIv7-mJelg7on_ALbx
-// });
-
 function CodeExecution() {
   const [code, setCode] = useState("//you can enter your code here");
   const [input, setInput] = useState("");
@@ -30,15 +20,8 @@ function CodeExecution() {
   const [userName, setUserName] = useState("");
   const [socket, setSocket] = useState(null);
 
-  // useEffect(() => {
-  // //   // socket.emit("join", ( "room 1" ))
-  // // }, []);
-
-  // useEffect(() => {}, []);
-
   useEffect(() => {
     if (room && userName) {
-      // joinRoom();
       setSocket(io(ENDPOINT));
     }
   }, [room, userName]);
@@ -82,30 +65,8 @@ function CodeExecution() {
     }
   };
 
-  // const joinRoom = () => {
-  //   console.log("The username from callback is", userName);
-
-  // };
-
-  // const useJoinRoom = (room) => {
-  //   setUserName(nanoid(15));
-  //   useEffect(() => {
-  //     socket.emit(
-  //       "joinRoom",
-  //       { userName: userName, room: room },
-  //       () => {
-  //         console.log(userName, room);
-  //       },
-  //       [room, userName]
-  //     );
-  //   });
-  // };
-
   const createRoom = () => {
     console.log(room);
-    // setUserName(nanoid(15));
-    // setRoom(nanoid(10));
-    // setRoom("1234");
     socket.emit("joinRoom", { userName: userName, room: room }, () => {
       console.log(userName, room);
     });
@@ -155,16 +116,7 @@ function CodeExecution() {
             </button>
           </div>
 
-          <Code
-            mode={mode}
-            code={code}
-            //value={code}
-            // onChange={(e) => {
-            //   setCode(e.target.value);
-            // }}
-            socket={socket}
-            setCode={setCode}
-          />
+          <Code mode={mode} code={code} socket={socket} setCode={setCode} />
         </section>
         <section className="executor__io">
           <div className="executor__input">
