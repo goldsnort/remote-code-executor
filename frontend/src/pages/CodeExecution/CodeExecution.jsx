@@ -24,8 +24,7 @@ function CodeExecution() {
   const [socket, setSocket] = useState(null);
   const [isSocketConnected, setIsSocketConnected] = useState(false);
   const [modal, setModal] = useState(false);
-  const [newUser, setNewUser] = useState(true);
-
+  let newUser = true;
   const roomInput = useRef("");
 
   useEffect(() => {
@@ -41,28 +40,26 @@ function CodeExecution() {
         console.log(userName, room);
       });
       socket.on("joinRoom", (message) => {
-        console.log("Join room listen ", message);
+        console.log("Join room listen ", message, code);
         console.log("room id ", room);
-        if (!newUser) {
-          console.log("The user is new: ",newUser);
-          socket.emit("sendCode", code, (message) => {
-            console.log(message);
-          });
-            socket.emit("sendInput",input, (message) => {
-          console.log(message);
-        })
-        socket.emit("sendLang",selectedLanguage, (message) => {
-          console.log(message);
-        })
-        socket.emit("sendOutput", output, (message) => {
-          console.log(message);
-        })
-        }
-        else {
-          console.log("The user is new: ",newUser);
-          setNewUser(false);
-        }
-      
+        // if (newUser) {
+        //   console.log("The user is new: ", newUser);
+        //   newUser = false;
+        // } else {
+        //   console.log("The user is newwala: ", newUser, code);
+        //   socket.emit("sendCode", code, () => {
+        //     console.log("this is the code emitted by old user", code);
+        //   });
+        //   socket.emit("sendInput", input, (message) => {
+        //     console.log(message);
+        //   });
+        //   socket.emit("sendLang", selectedLanguage, (message) => {
+        //     console.log(message);
+        //   });
+        //   socket.emit("sendOutput", output, (message) => {
+        //     console.log(message);
+        //   });
+        // }
       });
       socket.on("sendCode", (message) => {
         console.log(message);
@@ -106,6 +103,7 @@ function CodeExecution() {
     socket.off("sendInput");
     socket.off("sendOutput");
     socket.off("sendLang");
+    socket.disconnect();
     setIsSocketConnected(false);
     setSocket(null);
     setRoom("");
@@ -174,7 +172,7 @@ function CodeExecution() {
                   onClick={() => {
                     setUserName(nanoid(15));
                     setRoom(nanoid(10));
-                    setNewUser(false);
+                    newUser = false;
                   }}
                 >
                   Create Room
