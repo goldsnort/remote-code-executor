@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import "./CodeExecution.css";
 import handleCode from "../../assets/api/api";
@@ -7,6 +7,7 @@ import { nanoid } from "nanoid";
 import Code from "../../components/code/code";
 import Output from "../../components/Output/Output";
 import Input from "../../components/Input/Input";
+import Language from "../../components/Language/Language";
 
 const ENDPOINT = "http://localhost:4000";
 
@@ -18,10 +19,13 @@ function CodeExecution() {
   );
   const [selectedLanguage, setSelectedLanguage] = useState("cpp");
   const [mode, setMode] = useState("c_cpp");
-  const [room, setRoom] = useState("1234567891");
+  const [room, setRoom] = useState("");
   const [userName, setUserName] = useState("");
   const [socket, setSocket] = useState(null);
   const [isSocketConnected, setIsSocketConnected] = useState(false);
+  const [modal, setModal] = useState(false);
+
+  const roomInput = useRef("");
 
   useEffect(() => {
     if (room && userName) {
@@ -47,6 +51,10 @@ function CodeExecution() {
         console.log(message);
         setInput(message);
       });
+      socket.on("sendLang", (message) => {
+        console.log(message);
+        setSelectedLanguage(message);
+      });
       socket.on("sendOutput", (message) => {
         console.log(message);
         setOutput(message);
@@ -54,42 +62,51 @@ function CodeExecution() {
     }
   }, [socket]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    switch (e.target.value) {
-      case "C++":
-        setSelectedLanguage("cpp");
-        setMode("c_cpp");
-        break;
-      case "C":
-        setMode("c_cpp");
-        break;
-      case "Java":
-        setSelectedLanguage("java");
-        setMode("java");
-        break;
-      case "Python":
-        setSelectedLanguage("python");
-        setMode("python");
-        break;
-      default:
-        break;
-    }
+  const toggleModal = () => {
+    setModal(!modal);
   };
 
-  const createRoom = () => {
-    console.log(room);
-    socket.emit("joinRoom", { userName: userName, room: room }, () => {
+  const joinRoom = (e) => {
+    e.preventDefault();
+    console.log("join room");
+    if (roomInput.current.value && roomInput.current.value.length === 10) {
+      setRoom(roomInput.current.value);
+      setUserName(nanoid(15));
+    } else console.log("invalid room id");
+    setModal(!modal);
+  };
+
+  const leaveRoom = () => {
+    socket.emit("leaveRoom", { userName: userName, room: room }, () => {
       console.log(userName, room);
     });
+    socket.off("joinRoom");
+    socket.off("sendCode");
+    socket.off("sendInput");
+    socket.off("sendOutput");
+    socket.off("sendLang");
+    setIsSocketConnected(false);
+    setSocket(null);
+    setRoom("");
+    setUserName("");
   };
 
   function runCode(e) {
     e.preventDefault();
     handleCode(code, input, selectedLanguage, setOutput, socket);
   }
+
   return (
     <div className="executor__page">
+      {modal && (
+        <div className="modal">
+          <div className="overlay" onClick={toggleModal}></div>
+          <div className="modal__content">
+            <input ref={roomInput} type="text" placeholder="Enter Room Id" />
+            <button onClick={joinRoom}>Join</button>
+          </div>
+        </div>
+      )}
       <Navbar />
       <div className="executor__container">
         <section className="executor__code">
@@ -98,20 +115,12 @@ function CodeExecution() {
               Run
             </button>
 
-            <select className="code_language" onChange={handleSubmit}>
-              <option value="C++" name="c_cpp">
-                C++
-              </option>
-              <option value="C" name="c_cpp">
-                C
-              </option>
-              <option value="Java" name="java">
-                Java
-              </option>
-              <option value="Python" name="python">
-                Python
-              </option>
-            </select>
+            <Language
+              selectedLanguage={selectedLanguage}
+              socket={socket}
+              setMode={setMode}
+              setSelectedLanguage={setSelectedLanguage}
+            />
             {isSocketConnected ? (
               <div className="executor__room">
                 <div className="room__container">
@@ -133,10 +142,7 @@ function CodeExecution() {
                     <span className="material-icons">content_copy</span>
                   </button>
                 </div>
-                <button
-                  className="leave__room"
-                  // onClick={createRoom}
-                >
+                <button className="leave__room" onClick={leaveRoom}>
                   Leave Room
                 </button>
               </div>
@@ -151,13 +157,7 @@ function CodeExecution() {
                 >
                   Create Room
                 </button>
-                <button
-                  className="join__room"
-                  onClick={() => {
-                    setUserName(nanoid(15));
-                    setRoom(nanoid(10));
-                  }}
-                >
+                <button className="join__room" onClick={toggleModal}>
                   Join Room
                 </button>
               </div>

@@ -8,7 +8,7 @@ const io = require("socket.io")(server, {
   pingTimeout: 1000,
   pingInterval: 3000,
 });
-
+const { userJoin, getUser, userLeave } = require("./socket/socket");
 const cors = require("cors");
 
 const PORT = process.env.PORT || 4000;
@@ -24,34 +24,55 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  socket.join("some room");
-
-  console.log("what is a socket", socket);
   console.log("socket is active to be connected");
-
   socket.on("joinRoom", (payload) => {
-    socket.join(payload.room);
-    console.log("joinRoom payload", payload);
-    io.emit("joinRoom", payload);
+    const { room } = userJoin({
+      socketId: socket.id,
+      room: payload.room,
+      username: payload.userName,
+    });
+    if (room) {
+      socket.join(room);
+      console.log("joinRoom payload", payload);
+      io.emit("joinRoom", payload);
+    }
   });
 
   socket.on("sendCode", (payload) => {
-    console.log("what is payload", payload);
-    io.emit("sendCode", payload);
+    console.log("sendCode event triggered");
+    if (getUser(socket.id)) {
+      console.log("sendCode event triggered", payload);
+      io.emit("sendCode", payload);
+    }
   });
 
   socket.on("sendInput", (payload) => {
-    console.log("send Input event triggered", payload);
-    io.emit("sendInput", payload);
+    if (getUser(socket.id)) {
+      console.log("send Input event triggered", payload);
+      io.emit("sendInput", payload);
+    }
+  });
+
+  socket.on("sendLang", (payload) => {
+    if (getUser(socket.id)) {
+      console.log("send Lang event triggered", payload);
+      io.emit("sendLang", payload);
+    }
   });
 
   socket.on("sendOutput", (payload) => {
-    console.log("send Output event triggered", payload);
-    io.emit("sendOutput", payload);
+    if (getUser(socket.id)) {
+      console.log("send Output event triggered", payload);
+      io.emit("sendOutput", payload);
+    }
   });
 
   socket.on("disconnect", (payload) => {
-    console.log("disconnect event triggered", payload);
+    const user = userLeave(socket.id);
+    if (user) {
+      console.log("disconnect event triggered", payload);
+      io.emit("disconnect", payload);
+    }
   });
 });
 

@@ -3,10 +3,11 @@ import React from "react";
 function Input(props) {
   const handleChange = (e) => {
     props.setInput(e.target.value);
-    if (props.socket)
+    if (props.socket) {
       props.socket.emit("sendInput", e.target.value, () =>
         console.log("input change socket event triggered")
       );
+    }
   };
 
   return (
