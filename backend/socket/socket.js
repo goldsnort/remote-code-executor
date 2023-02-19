@@ -35,10 +35,10 @@ const userLeave = (socketId) => {
   return user;
 };
 
-const getRoomUsers = (room) => {
+const getRoomUsers = (roomId) => {
   let users;
   rooms.map((room) => {
-    if (room.roomName === room) {
+    if (room.roomName === roomId) {
       users = room.users;
     }
   });
@@ -46,11 +46,11 @@ const getRoomUsers = (room) => {
 };
 
 const getUser = (socketId) => {
-  let user;
+  let foundUser;
   rooms.map((room) => {
     room.users.map((user) => {
       if (user.socketId === socketId) {
-        user = user;
+        foundUser = user;
       }
     });
   });
