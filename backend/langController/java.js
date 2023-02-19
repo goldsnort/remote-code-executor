@@ -13,11 +13,11 @@ const java = (fileName, input, res) => {
       const container_id = response.stdout.substring(0, 12);
       console.log(container_id);
       exec(
-        `docker cp ${fileName}.java ${container_id}:/usr/java && docker cp ${fileName}.txt ${container_id}:/usr/java`
+        `docker cp ${fileName}.java ${container_id}:/usr/java/text.java && docker cp ${fileName}.txt ${container_id}:/usr/java`
       )
         .then(() => {
           exec(
-            `docker exec -t ${container_id} sh -c "java ${fileName}.java && java ${fileName}<${fileName}.txt"`
+            `docker exec -t ${container_id} sh -c "javac test.java && java test<${fileName}.txt"`
           )
             .then((resp) => {
               console.log(resp);

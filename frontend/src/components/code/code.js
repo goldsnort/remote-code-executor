@@ -1,4 +1,4 @@
-import React from "react";  
+import React from "react";
 import AceEditor from "react-ace";
 
 import "./code.css";
@@ -14,33 +14,34 @@ import "ace-builds/src-noconflict/ext-language_tools";
 
 const Code = (props) => {
   var handleChange = (newVal) => {
-      console.log(props.mode)
-      props.setCode(newVal);
-        
-    };
-    
-  
-  const content = (
-      <div id="editor">
-        <AceEditor
-          mode={props.mode}
-          width="100%"
-          height="100%"
-          value={props.code}
-          // theme="github"
-          theme="monokai"
-          showPrintMargin={false}
-          onChange={handleChange}
-          editorProps={{ $blockScrolling: true }}
-          setOptions={{
-            enableBasicAutocompletion: true,
-            enableLiveAutocompletion: true,
-            enableSnippets: true,
-          }}
-        />
-      </div>
-    );
-    return content;
+    props.setCode(newVal);
+    console.log("newVal: " + newVal);
+    if (props.socket)
+      props.socket.emit("sendCode", newVal, () => console.log("Message sent"));
   };
-  
-  export default Code;
+
+  const content = (
+    <div id="editor">
+      <AceEditor
+        mode={props.mode}
+        width="100%"
+        height="100%"
+        value={props.code}
+        // theme="github"
+        fontSize="17px"
+        theme="monokai"
+        showPrintMargin={false}
+        onChange={handleChange}
+        editorProps={{ $blockScrolling: true }}
+        setOptions={{
+          enableBasicAutocompletion: true,
+          enableLiveAutocompletion: true,
+          enableSnippets: true,
+        }}
+      />
+    </div>
+  );
+  return content;
+};
+
+export default Code;

@@ -18,6 +18,7 @@
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.8.4",
+    "socket.io": "^4.6.0",
     "util": "^0.12.5",
     "uuid": "^9.0.0"
   },
