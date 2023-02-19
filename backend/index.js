@@ -24,13 +24,15 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
+  let room;
   console.log("socket is active to be connected");
   socket.on("joinRoom", (payload) => {
-    const { room } = userJoin({
+      room  = userJoin({
       socketId: socket.id,
       room: payload.room,
       username: payload.userName,
     });
+    console.log(room);
     if (room) {
       socket.join(room);
       console.log("joinRoom payload", payload);
