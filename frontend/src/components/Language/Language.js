@@ -50,7 +50,7 @@ function Language(props) {
       onChange={(e) => {
         onLanguageChange(e);
       }}
-      value={props.selectedLanguage}
+      // value={props.selectedLanguage}
     >
       <option value="C++" name="c_cpp">
         C++
