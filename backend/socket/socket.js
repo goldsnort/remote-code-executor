@@ -20,11 +20,11 @@ const userJoin = ({ socketId, username, room }) => {
 };
 
 const userLeave = (socketId) => {
-  let user;
+  let leaveUser;
   rooms.map((room) => {
     room.users.map((user) => {
       if (user.socketId === socketId) {
-        user = user;
+        leaveUser = user;
         room.users.splice(room.users.indexOf(user), 1);
         if (room.users.length === 0) {
           rooms.splice(rooms.indexOf(room), 1);
@@ -32,7 +32,7 @@ const userLeave = (socketId) => {
       }
     });
   });
-  return user;
+  return leaveUser;
 };
 
 const getRoomUsers = (roomId) => {
@@ -46,15 +46,17 @@ const getRoomUsers = (roomId) => {
 };
 
 const getUser = (socketId) => {
-  let foundUser;
+  let value = "bogus";
   rooms.map((room) => {
     room.users.map((user) => {
       if (user.socketId === socketId) {
-        foundUser = user;
+        value = room.roomName;
+        return room.roomName;
       }
     });
+    return room.roomName;
   });
-  return socketId;
+  return value;
 };
 
 module.exports = { getUser, getRoomUsers, userJoin, userLeave };
