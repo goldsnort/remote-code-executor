@@ -8,6 +8,7 @@ import Code from "../../components/code/code";
 import Output from "../../components/Output/Output";
 import Input from "../../components/Input/Input";
 import Language from "../../components/Language/Language";
+import Fileupload from "../../components/Fileupload/Fileupload";
 
 const ENDPOINT = "http://localhost:4000";
 
@@ -133,7 +134,12 @@ function CodeExecution() {
             <button className="code__run" onClick={runCode}>
               Run
             </button>
-
+            <Fileupload
+              setCode={setCode}
+              setSelectedLanguage={setSelectedLanguage}
+              setMode={setMode}            
+            />
+            
             <Language
               selectedLanguage={selectedLanguage}
               socket={socket}
