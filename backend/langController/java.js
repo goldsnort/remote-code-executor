@@ -13,7 +13,7 @@ const java = (fileName, input, res) => {
       const container_id = response.stdout.substring(0, 12);
       console.log(container_id);
       exec(
-        `docker cp ${fileName}.java ${container_id}:/usr/java/text.java && docker cp ${fileName}.txt ${container_id}:/usr/java`
+        `docker cp ${fileName}.java ${container_id}:/usr/java/test.java && docker cp ${fileName}.txt ${container_id}:/usr/java`
       )
         .then(() => {
           exec(
