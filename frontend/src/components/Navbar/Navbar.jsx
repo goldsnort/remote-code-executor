@@ -11,6 +11,11 @@ function Navbar() {
     setClick(!click);
   };
 
+  const signUpClick = () => {
+    console.log("Sign up clicked");
+    alert("Devs are working on it, please wait for a while :)");
+  };
+
   return (
     <>
       <nav className="nav">
@@ -34,7 +39,9 @@ function Navbar() {
           </div>
           <div className="navbar-right">
             <Link to="/" className="navbar-btn">
-              <button className="auth-button">Sign up</button>
+              <button className="auth-button" onClick={signUpClick}>
+                Sign up
+              </button>
             </Link>
           </div>
         </div>
