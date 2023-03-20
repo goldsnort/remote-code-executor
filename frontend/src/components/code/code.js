@@ -16,6 +16,7 @@ const Code = (props) => {
   var handleChange = (newVal) => {
     props.setCode(newVal);
     console.log("newVal: " + newVal);
+    console.log("code : " + props.code);
     if (props.socket)
       props.socket.emit("sendCode", newVal, () => console.log("Message sent"));
   };

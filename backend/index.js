@@ -27,7 +27,7 @@ io.on("connection", (socket) => {
   let room;
   console.log("socket is active to be connected");
   socket.on("joinRoom", (payload) => {
-      room  = userJoin({
+    room = userJoin({
       socketId: socket.id,
       room: payload.room,
       username: payload.userName,
@@ -36,44 +36,47 @@ io.on("connection", (socket) => {
     if (room) {
       socket.join(room);
       console.log("joinRoom payload", payload);
-      io.emit("joinRoom", payload);
+      io.to(room).emit("joinRoom", payload);
     }
   });
 
   socket.on("sendCode", (payload) => {
-    console.log("sendCode event triggered");
-    if (getUser(socket.id)) {
-      console.log("sendCode event triggered", payload);
-      io.emit("sendCode", payload);
+    const room = getUser(socket.id);
+    if (room) {
+      console.log("sendCode event triggered room: ", room);
+      io.to(room).emit("sendCode", payload);
     }
   });
 
   socket.on("sendInput", (payload) => {
-    if (getUser(socket.id)) {
+    const room = getUser(socket.id);
+    if (room) {
       console.log("send Input event triggered", payload);
-      io.emit("sendInput", payload);
+      io.to(room).emit("sendInput", payload);
     }
   });
 
   socket.on("sendLang", (payload) => {
-    if (getUser(socket.id)) {
+    const room = getUser(socket.id);
+    if (room) {
       console.log("send Lang event triggered", payload);
-      io.emit("sendLang", payload);
+      io.to(room).emit("sendLang", payload);
     }
   });
 
   socket.on("sendOutput", (payload) => {
-    if (getUser(socket.id)) {
+    const room = getUser(socket.id);
+    if (room) {
       console.log("send Output event triggered", payload);
-      io.emit("sendOutput", payload);
+      io.to(room).emit("sendOutput", payload);
     }
   });
 
-  socket.on("disconnect", (payload) => {
+  socket.on("leaveRoom", (payload) => {
+    const room = getUser(socket.id);
     const user = userLeave(socket.id);
-    if (user) {
+    if (room) {
       console.log("disconnect event triggered", payload);
-      io.emit("disconnect", payload);
     }
   });
 });
