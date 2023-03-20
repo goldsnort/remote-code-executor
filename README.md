@@ -109,7 +109,7 @@ cd ../frontend && npm start
 
 ## Demo
 
-Insert gif or link to demo
+[Demo Link](https://www.youtube.com/watch?v=TSeHKnyP0CI)
 
 ## Contributing
 
