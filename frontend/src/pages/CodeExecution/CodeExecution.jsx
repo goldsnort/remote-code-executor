@@ -10,7 +10,7 @@ import Input from "../../components/Input/Input";
 import Language from "../../components/Language/Language";
 import Fileupload from "../../components/Fileupload/Fileupload";
 
-const ENDPOINT = "http://20.207.199.208/api";
+const ENDPOINT = "http://20.207.199.208";
 
 function CodeExecution() {
   const [code, setCode] = useState("//you can enter your code here");
@@ -30,8 +30,13 @@ function CodeExecution() {
 
   useEffect(() => {
     if (room && userName) {
+      console.log(room, userName);
       setIsSocketConnected(true);
-      setSocket(io(ENDPOINT));
+      setSocket(
+        io(ENDPOINT, {
+          path: "/api/socket.io",
+        })
+      );
     }
   }, [room, userName]);
 

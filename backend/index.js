@@ -5,23 +5,24 @@ const io = require("socket.io")(server, {
   cors: {
     origin: "*",
   },
+  path: "/api/socket.io/",
   pingTimeout: 1000,
   pingInterval: 3000,
 });
 const helmet = require("helmet");
 const { userJoin, getUser, userLeave } = require("./socket/socket");
-// const cors = require("cors");
+const cors = require("cors");
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 4000;
 
 let code = require("./routes/code");
 
 app.use(express.json());
 app.use(helmet());
-// app.use(cors());
+app.use(cors());
 
 app.use("/api/code", code);
-app.get("/api/", (req, res) => {
+app.get("/api/yo", (req, res) => {
   res.status(201).send("heyy!!!");
 });
 
