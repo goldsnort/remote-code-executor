@@ -10,7 +10,7 @@ import Input from "../../components/Input/Input";
 import Language from "../../components/Language/Language";
 import Fileupload from "../../components/Fileupload/Fileupload";
 
-const ENDPOINT = "http://localhost:4000";
+const ENDPOINT = "http://20.207.199.208/api";
 
 function CodeExecution() {
   const [code, setCode] = useState("//you can enter your code here");
@@ -137,9 +137,9 @@ function CodeExecution() {
             <Fileupload
               setCode={setCode}
               setSelectedLanguage={setSelectedLanguage}
-              setMode={setMode}            
+              setMode={setMode}
             />
-            
+
             <Language
               selectedLanguage={selectedLanguage}
               socket={socket}

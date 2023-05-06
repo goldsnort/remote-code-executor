@@ -1,4 +1,4 @@
-const baseURL = "http://localhost:4000";
+const baseURL = "/api";
 
 const outputChange = (d, setOutput, socket) => {
   console.log("output change triggered");

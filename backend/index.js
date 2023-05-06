@@ -8,18 +8,20 @@ const io = require("socket.io")(server, {
   pingTimeout: 1000,
   pingInterval: 3000,
 });
+const helmet = require("helmet");
 const { userJoin, getUser, userLeave } = require("./socket/socket");
-const cors = require("cors");
+// const cors = require("cors");
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3001;
 
 let code = require("./routes/code");
 
 app.use(express.json());
-app.use(cors());
+app.use(helmet());
+// app.use(cors());
 
-app.use("/code", code);
-app.get("/", (req, res) => {
+app.use("/api/code", code);
+app.get("/api/", (req, res) => {
   res.status(201).send("heyy!!!");
 });
 
