@@ -10,7 +10,7 @@ import Input from "../../components/Input/Input";
 import Language from "../../components/Language/Language";
 import Fileupload from "../../components/Fileupload/Fileupload";
 
-const ENDPOINT = "http://20.198.107.205";
+const ENDPOINT = "http://codexecutor.eu.org";
 
 function CodeExecution() {
   const [code, setCode] = useState("//you can enter your code here");
