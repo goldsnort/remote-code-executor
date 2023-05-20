@@ -10,7 +10,7 @@ import Input from "../../components/Input/Input";
 import Language from "../../components/Language/Language";
 import Fileupload from "../../components/Fileupload/Fileupload";
 
-const ENDPOINT = "http://20.207.199.208";
+const ENDPOINT = "http://20.198.107.205";
 
 function CodeExecution() {
   const [code, setCode] = useState("//you can enter your code here");
