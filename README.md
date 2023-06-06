@@ -6,6 +6,10 @@
 
 CODEX is a Remote Code Executor which lets you execute short code snippets of yours remotely.
 
+## Demo
+
+[Demo Link](https://www.youtube.com/watch?v=TSeHKnyP0CI)
+
 ## Authors
 
 - [@goldsnort](https://www.github.com/goldsnort)
@@ -106,10 +110,6 @@ cd ../frontend && npm start
 ![App Screenshot](https://i.ibb.co/d2vxwqJ/Screenshot-from-2023-03-20-22-49-11.png)
 
 
-
-## Demo
-
-[Demo Link](https://www.youtube.com/watch?v=TSeHKnyP0CI)
 
 ## Contributing
 
